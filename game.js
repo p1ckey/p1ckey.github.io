@@ -9,6 +9,7 @@ const MAP_HEIGHT = 4;
 
 const keys = {};
 
+
 document.addEventListener("keydown", (e) => {
   keys[e.key] = true;
 });
@@ -16,6 +17,56 @@ document.addEventListener("keydown", (e) => {
 document.addEventListener("keyup", (e) => {
   keys[e.key] = false;
 });
+
+
+class GameMap {
+  constructor(width, height, tileset) {
+    this.width = width;
+    this.height = height;
+    this.tileset = tileset;
+
+    this.data = [];
+
+    for (let y = 0; y < height; y++) {
+      this.data[y] = [];
+
+      for (let x = 0; x < width; x++) {
+        this.data[y][x] = tile.neutral;
+      }
+    }
+  }
+
+  getTile(x, y) {
+    return this.data[y][x];
+  }
+
+  setTile(x, y, value) {
+    this.data[y][x] = value;
+  }
+
+  draw(ctx) {
+    const ts = 16;
+
+    for (let y = 0; y < this.height; y++) {
+      for (let x = 0; x < this.width; x++) {
+
+        const tileId = this.data[y][x];
+
+        ctx.drawImage(
+          this.tileset,
+          tileId * ts,
+          0,
+          ts,
+          ts,
+          x * 80,
+          y * 80,
+          80,
+          80
+        );
+      }
+    }
+  }
+}
 
 class Entity {
   constructor(x, y, img, speed = 4) {
@@ -116,19 +167,19 @@ const tile = {
     enemy: 2,
 };
 
-const mapData = [
-    [ 0, 1, 1, 2],
-    [ 0, 1, 4, 2],
-    [ 0, 1, 5, 2],
-    [ 0, 1, 1, 2],
-];
+// const mapData = [
+//     [ 0, 1, 1, 2],
+//     [ 0, 1, 4, 2],
+//     [ 0, 1, 5, 2],
+//     [ 0, 1, 1, 2],
+// ];
 
-function drawMap() {
-    let ts = 16;
-    for(let y = 0; y < MAP_HEIGHT; y++)
-        for(let x = 0; x < MAP_WIDTH; x++)
-            ctx.drawImage(Assets.tileset, mapData[y][x]*ts, 0, ts, ts,x*80,y*80,80,80);
-}
+// function drawMap() {
+//     let ts = 16;
+//     for(let y = 0; y < MAP_HEIGHT; y++)
+//         for(let x = 0; x < MAP_WIDTH; x++)
+//             ctx.drawImage(Assets.tileset, mapData[y][x]*ts, 0, ts, ts,x*80,y*80,80,80);
+// }
 
 const EnemyTypes = {
     slime: { speed: 2, baseHp: 10 },
@@ -157,12 +208,13 @@ function loop() {
 
   player.update(keys);
   player.draw(ctx);
-  drawMap();
+  gameMap.draw(ctx);
 
   requestAnimationFrame(loop);
 }
 
 loadAssets(() => {
-  player = new Player(100, 100, Assets.player);
+  let player = new Player(100, 100, Assets.player);
+  let gameMap = new GameMap(30,30,Assets.tileset);
   loop();
 });
