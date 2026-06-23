@@ -9,6 +9,9 @@ const MAP_HEIGHT = 4;
 
 const keys = {};
 
+let player;
+let gameMap;
+
 
 document.addEventListener("keydown", (e) => {
   keys[e.key] = true;
@@ -214,7 +217,7 @@ function loop() {
 }
 
 loadAssets(() => {
-  let player = new Player(100, 100, Assets.player);
-  let gameMap = new GameMap(30,30,Assets.tileset);
+  player = new Player(100, 100, Assets.player);
+  gameMap = new GameMap(30,30,Assets.tileset);
   loop();
 });
