@@ -2,7 +2,10 @@ const canvas = document.getElementById("canvas");
 const ctx = canvas.getContext("2d");
 
 canvas.width = 800;
-canvas.height = 600;
+canvas.height = 600
+
+const MAP_WIDTH = 4;
+const MAP_HEIGHT = 4;
 
 const keys = {};
 
@@ -120,6 +123,13 @@ const mapData = [
     [ 0, 1, 1, 2],
 ];
 
+function drawMap() {
+    let ts = 16;
+    for(let y = 0; y < MAP_HEIGHT; y++)
+        for(let x = 0; x < MAP_WIDTH; x++)
+            ctx.drawImage(Assets.tileset, mapData[y][x]*ts, 0, mapData[y][x]*ts+ts, ts,x*80,y*80,x*80+80,y*80+80);
+}
+
 const EnemyTypes = {
     slime: { speed: 2, baseHp: 10 },
 };
@@ -147,6 +157,7 @@ function loop() {
 
   player.update(keys);
   player.draw(ctx);
+  drawMap();
 
   requestAnimationFrame(loop);
 }
