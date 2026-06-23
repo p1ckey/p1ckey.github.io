@@ -127,7 +127,7 @@ function drawMap() {
     let ts = 16;
     for(let y = 0; y < MAP_HEIGHT; y++)
         for(let x = 0; x < MAP_WIDTH; x++)
-            ctx.drawImage(Assets.tileset, mapData[y][x]*ts, 0, mapData[y][x]*ts+ts, ts,x*80,y*80,x*80+80,y*80+80);
+            ctx.drawImage(Assets.tileset, mapData[y][x]*ts, 0, ts, ts,x*80,y*80,80,80);
 }
 
 const EnemyTypes = {
