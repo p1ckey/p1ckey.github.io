@@ -209,9 +209,10 @@ function loadAssets(onReady) {
 function loop() {
   ctx.clearRect(0, 0, canvas.width, canvas.height);
 
+  gameMap.draw(ctx);
+    
   player.update(keys);
   player.draw(ctx);
-  gameMap.draw(ctx);
 
   requestAnimationFrame(loop);
 }
