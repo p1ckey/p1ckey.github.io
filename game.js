@@ -135,6 +135,7 @@ function loadAssets(onReady) {
 
   Assets.player.onload = check;
   Assets.enemy.onload = check;
+  Assets.tileset.onload = check;
 
   Assets.player.src = "assets/player.png";
   Assets.enemy.src = "assets/monster1.png";
