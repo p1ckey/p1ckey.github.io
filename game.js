@@ -72,6 +72,8 @@ class GameMap {
   }
 
   draw(ctx) {
+    console.log("draw map");
+
     const ts = TILE_SIZE;
     const tis = TILE_IMAGE_SIZE;
 
@@ -79,6 +81,7 @@ class GameMap {
       for (let x = 0; x < this.width; x++) {
 
         const tileId = this.data[y][x];
+        console.log(tileId);
 
         ctx.drawImage(
           this.tileset,
