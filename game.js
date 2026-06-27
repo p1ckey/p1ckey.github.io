@@ -2,7 +2,7 @@ const canvas = document.getElementById("canvas");
 const ctx = canvas.getContext("2d");
 
 canvas.width = 800;
-canvas.height = 600
+canvas.height = 600;
 
 const MAP_WIDTH = 4;
 const MAP_HEIGHT = 4;
@@ -189,6 +189,8 @@ const EnemyTypes = {
 };
 
 function loadAssets(onReady) {
+  for(let i = 0;i<3;i++)
+    let img = 1
   let loaded = 0;
   const total = 3;
 
