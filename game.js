@@ -148,6 +148,7 @@ class Player extends Entity {
           this.x === this.targetX &&
           this.y === this.targetY;
     if(arrived){
+      console.log(this.x,this.y);
         if (pressedKeys["ArrowUp"] || pressedKeys["w"]) {
           this.targetY -= TILE_SIZE;
           this.direction = Direction.Up;
