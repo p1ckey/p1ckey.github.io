@@ -7,6 +7,8 @@ canvas.height = 600;
 const MAP_WIDTH = 4;
 const MAP_HEIGHT = 4;
 
+const TILE_SIZE = 80;
+
 const pressedKeys = {};
 
 let player;
@@ -61,10 +63,10 @@ class GameMap {
           0,
           ts,
           ts,
-          x * 80,
-          y * 80,
-          80,
-          80
+          x * TILE_SIZE,
+          y * TILE_SIZE,
+          TILE_SIZE,
+          TILE_SIZE
         );
       }
     }
@@ -114,56 +116,42 @@ moveTowardTarget() {
 }
 
 const Directions = {
-  down: 0,
-  left: 1,
-  right: 2,
-  up: 3,
+  Down: 0,
+  Left: 1,
+  Right: 2,
+  Up: 3,
 };
 
 class Player extends Entity {
   update(pressedKeys) {
 
-const arrived =
-      this.x === this.targetX &&
-      this.y === this.targetY;
-if(arrived){
-    if (pressedKeys["ArrowUp"] || pressedKeys["w"]) {
-      this.targetY -= 80;
-      this.direction = 3;
+    const arrived =
+          this.x === this.targetX &&
+          this.y === this.targetY;
+    if(arrived){
+        if (pressedKeys["ArrowUp"] || pressedKeys["w"]) {
+          this.targetY -= 80;
+          this.direction = Directions.Up;
+        }
+
+        else if (pressedKeys["ArrowLeft"] || pressedKeys["a"]) {
+          this.targetX -= 80;
+          this.direction = Directions.Left;
+        }
+
+        else if (pressedKeys["ArrowRight"] || pressedKeys["d"]) {
+          this.targetX += 80;
+          this.direction = Directions.Right;
+        }
+
+        else if (pressedKeys["ArrowDown"] || pressedKeys["s"]) {
+          this.targetY += 80;
+          this.direction = Directions.Down;
+        }
     }
-
-    else if (pressedKeys["ArrowLeft"] || pressedKeys["a"]) {
-      this.targetX -= 80;
-      this.direction = 1;
-    }
-
-    else if (pressedKeys["ArrowRight"] || pressedKeys["d"]) {
-      this.targetX += 80;
-      this.direction = 2;
-    }
-
-    else if (pressedKeys["ArrowDown"] || pressedKeys["s"]) {
-      this.targetY += 80;
-      this.direction = 0;
-    }
-    }
-// this.moving =
-//       this.x !== this.targetX ||
-//       this.y !== this.targetY;
-
-// if(this.moving){
-// this.anim += 0.1;
-// this.frame = Math.floor(this.anim) % 2;
-
-// if (this.x < this.targetX) this.x += this.speed;
-// if (this.x > this.targetX) this.x -= this.speed;
-
-// if (this.y < this.targetY) this.y += this.speed;
-// if (this.y > this.targetY) this.y -= this.speed;
-
-//   }
+    
     this.moveTowardTarget();
-}
+  }
 }
 const Assets = {
     player: new Image(),
@@ -172,9 +160,9 @@ const Assets = {
 };
 
 const TileType = {
-    neutral: 0,
-    ally: 1,
-    enemy: 2,
+    Neutral: 0,
+    Ally: 1,
+    Enemy: 2,
 };
 
 // const mapData = [
@@ -192,7 +180,7 @@ const TileType = {
 // }
 
 const EnemyTypes = {
-    slime: { speed: 2, baseHp: 10 },
+    Slime: { speed: 2, baseHp: 10 },
 };
 
 function loadAssets(onReady) {
