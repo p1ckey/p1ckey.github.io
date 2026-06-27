@@ -72,7 +72,7 @@ class GameMap {
   }
 
   draw(ctx) {
-    console.log("draw map");
+    // console.log("draw map");
 
     const ts = TILE_SIZE;
     const tis = TILE_IMAGE_SIZE;
@@ -81,7 +81,7 @@ class GameMap {
       for (let x = 0; x < this.width; x++) {
 
         const tileId = this.data[y][x];
-        console.log(tileId);
+        // console.log(tileId);
 
         ctx.drawImage(
           this.tileset,
@@ -208,7 +208,7 @@ function loop() {
 }
 
 loadAssets(() => {
-  player = new Player(100, 100, Assets.player);
+  player = new Player(128, 128, Assets.player);
   gameMap = new GameMap(MAP_WIDTH, MAP_HEIGHT, Assets.tileset);
   loop();
 });
