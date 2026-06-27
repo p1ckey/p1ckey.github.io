@@ -7,7 +7,9 @@ canvas.height = 600;
 const MAP_WIDTH = 4;
 const MAP_HEIGHT = 4;
 
-const TILE_SIZE = 80;
+const TILE_SIZE = 64;
+const TILE_IMAGE_SIZE = 16;
+const PLAYER_IMAGE_SIZE = 20;
 
 const pressedKeys = {};
 
@@ -50,7 +52,7 @@ class GameMap {
   }
 
   draw(ctx) {
-    const ts = 16;
+    const tis = TILE_IMAGE_SIZE;
 
     for (let y = 0; y < this.height; y++) {
       for (let x = 0; x < this.width; x++) {
@@ -59,10 +61,10 @@ class GameMap {
 
         ctx.drawImage(
           this.tileset,
-          tileId * ts,
+          tileId * tis,
           0,
-          ts,
-          ts,
+          tis,
+          tis,
           x * TILE_SIZE,
           y * TILE_SIZE,
           TILE_SIZE,
@@ -105,8 +107,8 @@ moveTowardTarget() {
   update() {}
 
   draw(ctx) {
-    const fw = 20;
-    const fh = 20;
+    const fw = PLAYER_IMAGE_SIZE;
+    const fh = PLAYER_IMAGE_SIZE;
 
     const sx = this.frame * fw;
     const sy = this.direction * fh;
