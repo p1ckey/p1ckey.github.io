@@ -4,8 +4,8 @@ const ctx = canvas.getContext("2d");
 canvas.width = 800;
 canvas.height = 600;
 
-const MAP_WIDTH = 4;
-const MAP_HEIGHT = 4;
+const MAP_WIDTH = 20;
+const MAP_HEIGHT = 20;
 
 const TILE_SIZE = 64;
 const TILE_IMAGE_SIZE = 16;
@@ -26,7 +26,7 @@ const TileType = Object.freeze({
     Enemy: 2,
 });
 
-const EnemyTypes = Object.freeze({
+const EnemyType = Object.freeze({
     Slime: {
         speed: 2,
         baseHp: 10,
@@ -146,23 +146,23 @@ class Player extends Entity {
           this.y === this.targetY;
     if(arrived){
         if (pressedKeys["ArrowUp"] || pressedKeys["w"]) {
-          this.targetY -= 80;
-          this.direction = Directions.Up;
+          this.targetY -= TILE_SIZE;
+          this.direction = Direction.Up;
         }
 
         else if (pressedKeys["ArrowLeft"] || pressedKeys["a"]) {
-          this.targetX -= 80;
-          this.direction = Directions.Left;
+          this.targetX -= TILE_SIZE;
+          this.direction = Direction.Left;
         }
 
         else if (pressedKeys["ArrowRight"] || pressedKeys["d"]) {
-          this.targetX += 80;
-          this.direction = Directions.Right;
+          this.targetX += TILE_SIZE;
+          this.direction = Direction.Right;
         }
 
         else if (pressedKeys["ArrowDown"] || pressedKeys["s"]) {
-          this.targetY += 80;
-          this.direction = Directions.Down;
+          this.targetY += TILE_SIZE;
+          this.direction = Direction.Down;
         }
     }
     
@@ -206,6 +206,6 @@ function loop() {
 
 loadAssets(() => {
   player = new Player(100, 100, Assets.player);
-  gameMap = new GameMap(30,30,Assets.tileset);
+  gameMap = new GameMap(MAP_WIDTH, MAP_HEIGHT, Assets.tileset);
   loop();
 });
