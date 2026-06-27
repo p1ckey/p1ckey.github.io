@@ -58,7 +58,7 @@ class GameMap {
       this.data[y] = [];
 
       for (let x = 0; x < width; x++) {
-        this.data[y][x] = TileType.neutral;
+        this.data[y][x] = TileType.Neutral;
       }
     }
   }
