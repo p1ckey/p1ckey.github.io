@@ -13,6 +13,26 @@ const PLAYER_IMAGE_SIZE = 20;
 
 const pressedKeys = {};
 
+const Direction = Object.freeze({
+    Down: 0,
+    Left: 1,
+    Right: 2,
+    Up: 3,
+});
+
+const TileType = Object.freeze({
+    Neutral: 0,
+    Ally: 1,
+    Enemy: 2,
+});
+
+const EnemyTypes = Object.freeze({
+    Slime: {
+        speed: 2,
+        baseHp: 10,
+    },
+});
+
 let player;
 let gameMap;
 
@@ -52,6 +72,7 @@ class GameMap {
   }
 
   draw(ctx) {
+    const ts = TILE_SIZE;
     const tis = TILE_IMAGE_SIZE;
 
     for (let y = 0; y < this.height; y++) {
@@ -65,10 +86,10 @@ class GameMap {
           0,
           tis,
           tis,
-          x * TILE_SIZE,
-          y * TILE_SIZE,
-          TILE_SIZE,
-          TILE_SIZE
+          x * ts,
+          y * ts,
+          ts,
+          ts
         );
       }
     }
@@ -79,7 +100,7 @@ class Entity {
   constructor(x, y, img, speed = 4) {
     this.x = x;
     this.y = y;
-    this.targetX = this.    x;
+    this.targetX = this.x;
     this.targetY = this.y;
     this.speed = speed;
     this.img = img;
@@ -107,22 +128,15 @@ moveTowardTarget() {
   update() {}
 
   draw(ctx) {
-    const fw = PLAYER_IMAGE_SIZE;
-    const fh = PLAYER_IMAGE_SIZE;
+    const pis = PLAYER_IMAGE_SIZE;
+    const ts = TILE_SIZE;
 
-    const sx = this.frame * fw;
-    const sy = this.direction * fh;
+    const sx = this.frame * pis;
+    const sy = this.direction * pis;
 
-    ctx.drawImage(this.img, sx, sy, fw, fh, this.x, this.y, fw*4, fh*4);
+    ctx.drawImage(this.img, sx, sy, pis, pis, this.x, this.y, ts, ts);
   }
 }
-
-const Directions = {
-  Down: 0,
-  Left: 1,
-  Right: 2,
-  Up: 3,
-};
 
 class Player extends Entity {
   update(pressedKeys) {
@@ -159,30 +173,6 @@ const Assets = {
     player: new Image(),
     enemy: new Image(),
     tileset: new Image(),
-};
-
-const TileType = {
-    Neutral: 0,
-    Ally: 1,
-    Enemy: 2,
-};
-
-// const mapData = [
-//     [ 0, 1, 1, 2],
-//     [ 0, 1, 4, 2],
-//     [ 0, 1, 5, 2],
-//     [ 0, 1, 1, 2],
-// ];
-
-// function drawMap() {
-//     let ts = 16;
-//     for(let y = 0; y < MAP_HEIGHT; y++)
-//         for(let x = 0; x < MAP_WIDTH; x++)
-//             ctx.drawImage(Assets.tileset, mapData[y][x]*ts, 0, ts, ts,x*80,y*80,80,80);
-// }
-
-const EnemyTypes = {
-    Slime: { speed: 2, baseHp: 10 },
 };
 
 function loadAssets(onReady) {
