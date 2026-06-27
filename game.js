@@ -7,18 +7,18 @@ canvas.height = 600;
 const MAP_WIDTH = 4;
 const MAP_HEIGHT = 4;
 
-const keys = {};
+const pressedKeys = {};
 
 let player;
 let gameMap;
 
 
 document.addEventListener("keydown", (e) => {
-  keys[e.key] = true;
+  pressedKeys[e.key] = true;
 });
 
 document.addEventListener("keyup", (e) => {
-  keys[e.key] = false;
+  pressedKeys[e.key] = false;
 });
 
 
@@ -34,7 +34,7 @@ class GameMap {
       this.data[y] = [];
 
       for (let x = 0; x < width; x++) {
-        this.data[y][x] = tile.neutral;
+        this.data[y][x] = TileType.neutral;
       }
     }
   }
@@ -113,29 +113,36 @@ moveTowardTarget() {
   }
 }
 
+const Directions = {
+  down: 0,
+  left: 1,
+  right: 2,
+  up: 3,
+};
+
 class Player extends Entity {
-  update(keys) {
+  update(pressedKeys) {
 
 const arrived =
       this.x === this.targetX &&
       this.y === this.targetY;
 if(arrived){
-    if (keys["ArrowUp"] || keys["w"]) {
+    if (pressedKeys["ArrowUp"] || pressedKeys["w"]) {
       this.targetY -= 80;
       this.direction = 3;
     }
 
-    else if (keys["ArrowLeft"] || keys["a"]) {
+    else if (pressedKeys["ArrowLeft"] || pressedKeys["a"]) {
       this.targetX -= 80;
       this.direction = 1;
     }
 
-    else if (keys["ArrowRight"] || keys["d"]) {
+    else if (pressedKeys["ArrowRight"] || pressedKeys["d"]) {
       this.targetX += 80;
       this.direction = 2;
     }
 
-    else if (keys["ArrowDown"] || keys["s"]) {
+    else if (pressedKeys["ArrowDown"] || pressedKeys["s"]) {
       this.targetY += 80;
       this.direction = 0;
     }
@@ -164,7 +171,7 @@ const Assets = {
     tileset: new Image(),
 };
 
-const tile = {
+const TileType = {
     neutral: 0,
     ally: 1,
     enemy: 2,
@@ -189,8 +196,6 @@ const EnemyTypes = {
 };
 
 function loadAssets(onReady) {
-  for(let i = 0;i<3;i++)
-    let img = 1
   let loaded = 0;
   const total = 3;
 
@@ -213,7 +218,7 @@ function loop() {
 
   gameMap.draw(ctx);
     
-  player.update(keys);
+  player.update(pressedKeys);
   player.draw(ctx);
 
   requestAnimationFrame(loop);
